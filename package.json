@@ -1,0 +1,37 @@
+{
+  "name": "swiggy",
+  "version": "1.0.0",
+  "description": "A food delivery app similar to swiggy",
+  "main": "App.js",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/malayproject/swiggy.git"
+  },
+  "author": "Malay Sarkar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/malayproject/swiggy/issues"
+  },
+  "homepage": "https://github.com/malayproject/swiggy#readme",
+  "devDependencies": {
+    "buffer": "^6.0.3",
+    "parcel": "^2.9.3",
+    "postcss": "^8.4.28",
+    "process": "^0.11.10",
+    "tailwindcss": "^3.3.3"
+  },
+  "dependencies": {
+    "axios": "^1.5.0",
+    "lodash": "^4.17.21",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "browsersList": [
+    "last 2 versions"
+  ]
+}
