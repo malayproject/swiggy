@@ -1,4 +1,5 @@
 import React, { useState, useEffect, memo } from "react";
+import { Link } from "react-router-dom";
 import _ from "lodash";
 
 import RestaurantCard from "./RestaurantCard";
@@ -107,10 +108,13 @@ const Body = () => {
           className="flex flex-row flex-wrap justify-between w-full mt-4"
         >
           {_.map(restaurant_grid_listing, (restaurantInfo) => (
-            <RestaurantCard
-              restaurantInfo={restaurantInfo}
+            <Link
+              to={`/restaurants/${restaurantInfo?.info?.id}`}
               key={restaurantInfo?.info?.id}
-            />
+              className="basis-72 h-100 rounded-t-xl m-4 hover:cursor-pointer"
+            >
+              <RestaurantCard restaurantInfo={restaurantInfo} />
+            </Link>
           ))}
         </div>
       </div>

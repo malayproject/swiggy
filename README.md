@@ -32,10 +32,13 @@ using react through script tag and having network call for react package is not 
 - multiple line JSX needs to be wrapped in paranthesis for babel to understand.
 - JSX =>(by babel) React.creeateElement => react element(JS Object) => rendered as HTML element.
 
-// Javascript
+// React-router v6
 
-it is a single threaded language:
-it runs on jsEnjine like V8 engine in chrome
+- createBrowserRouter takes a list of objects...where each object has path and element keys.
+- createBrowserRouter returns a brouser router. => const appRouter = createBrowserRouter([{path: "/", element: <App />}]);
+- the react root render method needs to be passed the RouterProvider component with prop router => root.render(<RouterProvider router={appRouter} />);
+- Outlet can be used to render children components through children routes. => [{path: "/", element: <App />, chidren: [{path: "about", element: <About />}]}];
+- in react for links never use <a> tags as it relaods the whole page, rather use <Link to="">About</Link>;
 
 // misc
 
@@ -83,3 +86,22 @@ it runs on jsEnjine like V8 engine in chrome
   React traverses the tree and compares the nodes in the new tree with their counterparts in the old tree.
   For each pair of corresponding nodes, React determines if there are any differences in their type, props, or children.
   If there are differences, React updates the corresponding part of the actual DOM to reflect the changes.
+
+6. What happens when a local state variable is changed?
+
+- React rerenders the component by triggeriung the reconciliation cycle and finding the diff between the prev and updated virtual DOM(JS object representation).
+- Once it finds the minimum DOM modifications required it actually updates the DOM.
+- So thought he whole component re-renders, only th eactual changes get updated in that component.
+- React all this while keeps reference to the component instance and its state data so that the satte data is consistent between rerenders.
+
+7. Effect of dependency array on useEffect callback called?
+
+- The dependency array in the useEffect hook controls when the effect runs and what all state variables and props it has access to.
+- Empty Array([]) : the effect will run only once, immediately after the component mounts. It doesnt rerun on any state or prop change.
+- [state, props] : When you include variables or props in the dependency array, the effect runs whenever any of those dependencies change between renders. React compares the current values of the dependencies with the previous render's values and re-runs the effect if any of them have changed.
+- No Dependency Array: the effect will re-run on every render/rerender of the component.
+
+8. Key points to consider while setting the dependency array?
+
+- dont modify those state variables that are part of the dependency array of the same effect... can cause infite loops.
+- if the depemndencies are objects or arrays...reactg compares them by reference, so even if the object/array contents get changed, react will not run the effect if the reference is same.
