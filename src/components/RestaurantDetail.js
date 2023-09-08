@@ -1,22 +1,11 @@
-import React, { memo, useState, useEffect } from "react";
+import React, { memo } from "react";
 import { useParams } from "react-router-dom";
 import RestaurantBasicSection from "./RestaurantBasicSection";
+import useResTaurantBasicDetails from "../customHooks/useRestaurantBasicDetails";
 
 const RestaurantDetail = () => {
-  const [resDetails, setResDetails] = useState(null);
   const { resId } = useParams();
-  console.log("resDetails 6", resDetails);
-  const fetchResDetails = async () => {
-    const response = await fetch(
-      `https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=28.4146069&lng=76.9950503&restaurantId=${resId}`
-    );
-    const data = await response.json();
-    console.log("resDetails 12", data);
-    setResDetails(data?.data);
-  };
-  useEffect(() => {
-    fetchResDetails();
-  }, []);
+  const resDetails = useResTaurantBasicDetails(resId);
   const basicDetails = resDetails?.cards[0]?.card?.card?.info;
   return (
     <div className="w-5/12 mt-12">

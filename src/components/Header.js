@@ -2,11 +2,15 @@ import React, { memo, useState } from "react";
 import { Link } from "react-router-dom";
 
 import Image from "../images/oie_jpBljfyksr4l.png";
+import useOnlineStatus from "../customHooks/useOnlineStatus";
 
 export const Header = () => {
   const [signInBtn, setSignInBtn] = useState("Sign In");
   const [x, setX] = useState(false);
-  console.log("Header rendered");
+  const onlineStatus = useOnlineStatus();
+  const onlineStatusIndicatorBgColor = onlineStatus
+    ? "bg-green-600"
+    : "bg-orange-600";
 
   return (
     <div className="w-screen shadow-[0px_3px_15px_4px_rgba(0,0,0,0.05)]">
@@ -15,11 +19,23 @@ export const Header = () => {
           <img src={Image} width="35" />
         </div>
         <div className="flex flex-row flex-1 justify-end">
+          <div className="min-w-[10%] flex flex-row">
+            <div
+              className={`w-3 h-3 rounded-[6px] ${onlineStatusIndicatorBgColor} self-center`}
+            ></div>
+            <div className="ml-2">Online Status</div>
+          </div>
           <Link
             to="/"
             className="min-w-[6%] font-semibold text-gray-700 cursor-pointer bg-slate-50 text-center hover:text-orange-400"
           >
             Home
+          </Link>
+          <Link
+            to="/grocery"
+            className="min-w-[6%] font-semibold text-gray-700 cursor-pointer bg-slate-50 text-center hover:text-orange-400"
+          >
+            Grocery
           </Link>
           <Link
             to="/contact"
@@ -41,14 +57,6 @@ export const Header = () => {
             }}
           >
             {signInBtn}
-          </button>
-          <button
-            className="ml-2 min-w-[8%] font-semibold text-gray-700 cursor-pointer bg-slate-50 text-center border-[1px] border-[#c0c0c0] rounded-md hover:text-orange-400"
-            onClick={(e) => {
-              setX(!x);
-            }}
-          >
-            x
           </button>
           <div className="ml-2 min-w-[6%] font-semibold text-gray-700 cursor-pointer bg-slate-50 text-center hover:text-orange-400">
             Cart

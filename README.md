@@ -39,6 +39,32 @@ using react through script tag and having network call for react package is not 
 - the react root render method needs to be passed the RouterProvider component with prop router => root.render(<RouterProvider router={appRouter} />);
 - Outlet can be used to render children components through children routes. => [{path: "/", element: <App />, chidren: [{path: "about", element: <About />}]}];
 - in react for links never use <a> tags as it relaods the whole page, rather use <Link to="">About</Link>;
+- two types of routing: client side and server side routing, react follows clientr side routing, the markup code is already available as single page application.
+- useParam Hook is used to get the quesryParam values in a component.
+- in a error page component useRouteError can be used to get additional router error details for populating info on the error page.
+
+// react class components
+
+- constructor called => render called => componentDidMount called
+- if parent and chimkd components are both class components: parent constructor => parent render => child constructor => child render => child componentDidMopunt => parent componentDidMount
+- if parent class component has multiple child class comp-onents: see below
+- parent constructor
+- parent render
+
+  - first child constructor
+  - first child render
+
+  - second child constructor
+  - second child render
+
+  - first child componentDidMount
+  - second child componentDidMount
+
+- parent componentDidMount.
+
+- react completes this in two phases to batch all dom manipulation simultaneously for optimization at one time:
+  - render phase
+  - commit phase
 
 // misc
 
@@ -104,4 +130,7 @@ using react through script tag and having network call for react package is not 
 8. Key points to consider while setting the dependency array?
 
 - dont modify those state variables that are part of the dependency array of the same effect... can cause infite loops.
-- if the depemndencies are objects or arrays...reactg compares them by reference, so even if the object/array contents get changed, react will not run the effect if the reference is same.
+- if the dependencies are objects or arrays...react compares them by reference, so even if the object/array contents get changed, react will not run the effect if the reference is same.
+
+9. Why cant we have useEffect callback funcrtion as async?
+10. Can we have componentDidMount as async?

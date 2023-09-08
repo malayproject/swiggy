@@ -20,6 +20,7 @@
   "homepage": "https://github.com/malayproject/swiggy#readme",
   "devDependencies": {
     "buffer": "^6.0.3",
+    "os-browserify": "^0.3.0",
     "parcel": "^2.9.3",
     "postcss": "^8.4.28",
     "process": "^0.11.10",
