@@ -1,5 +1,6 @@
 import { memo, Component } from "react";
 import UserClass from "./UserClass";
+import UserContext from "../contexts/UserContext.js";
 
 class AboutUs extends Component {
   constructor(props) {
@@ -16,6 +17,10 @@ class AboutUs extends Component {
     return (
       <div>
         <h1>Swiggy</h1>
+        <UserContext.Consumer>
+          {(userData) => <div>{userData.userName}</div>}
+        </UserContext.Consumer>
+        <div className=""></div>
         <p>This is a swiggy food delivery app.</p>
         <UserClass name="Malay" location="Gurgaon" order="first" />
         <UserClass name="Palash" location="Bangalore" order="second" />

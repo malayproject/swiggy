@@ -1,8 +1,10 @@
-import React, { memo, useState } from "react";
+import React, { memo, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 
 import Image from "../images/oie_jpBljfyksr4l.png";
 import useOnlineStatus from "../customHooks/useOnlineStatus";
+import UserContext from "../contexts/UserContext";
+import { useSelector } from "react-redux";
 
 export const Header = () => {
   const [signInBtn, setSignInBtn] = useState("Sign In");
@@ -11,6 +13,10 @@ export const Header = () => {
   const onlineStatusIndicatorBgColor = onlineStatus
     ? "bg-green-600"
     : "bg-orange-600";
+
+  const { userName } = useContext(UserContext);
+  const items = useSelector((store) => store.cart.items);
+  console.log("items", items);
 
   return (
     <div className="w-screen shadow-[0px_3px_15px_4px_rgba(0,0,0,0.05)]">
@@ -38,12 +44,6 @@ export const Header = () => {
             Grocery
           </Link>
           <Link
-            to="/contact"
-            className="min-w-[7%] font-semibold text-gray-700 cursor-pointer bg-slate-50 text-center hover:text-orange-400"
-          >
-            Contact Us
-          </Link>
-          <Link
             to="/about"
             className="min-w-[9%] font-semibold text-gray-700 cursor-pointer bg-slate-50 text-center hover:text-orange-400"
           >
@@ -58,8 +58,9 @@ export const Header = () => {
           >
             {signInBtn}
           </button>
+          <div className="ml-2 min-w-[8%] font font-semibold">{userName}</div>
           <div className="ml-2 min-w-[6%] font-semibold text-gray-700 cursor-pointer bg-slate-50 text-center hover:text-orange-400">
-            Cart
+            Cart({items.length})
           </div>
         </div>
       </div>

@@ -1,5 +1,4 @@
-import React, { useState, useEffect, memo } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, memo, useContext } from "react";
 import _ from "lodash";
 
 import RestaurantCard from "./RestaurantCard";
@@ -9,15 +8,20 @@ import Search from "./Search";
 import RestaurantContainerShimmer from "./RestaurantContainer.shimmer";
 import HeaderShimmer from "./Header.shimmer";
 import { FETCH_URL } from "../utils/constants";
+import withLinkAndPromoted from "./withLinkAndPromoted";
+import UserContext from "../contexts/UserContext";
 
 const Body = () => {
   const location = useGeoLocation();
   if (location.error) return <p>{location?.error?.message}</p>;
+  console.log("loc", location);
 
   const [restaurant_grid_listing, setRestaurant_grid_listing] = useState([]);
   const [pristineRestaurantList, setPristineRestaurantList] = useState([]);
   const [searchVal, setSearchVal] = useState("");
   const [isHighRated, setIsHighRated] = useState(false);
+
+  const { userName, setUserName } = useContext(UserContext);
 
   const scrollHandler = (event) => {
     const { clientHeight, scrollHeight, scrollTop } = event.currentTarget;
@@ -29,7 +33,9 @@ const Body = () => {
   };
 
   const fetchInitData = async () => {
-    const res = await fetch(FETCH_URL);
+    const res = await fetch(
+      `${FETCH_URL}lat=${location.coordinates.latitude}&lng=${location.coordinates.longitude}`
+    );
     const json = await res.json();
     const data = _.find(
       json?.data?.cards,
@@ -83,6 +89,8 @@ const Body = () => {
       </div>
     );
 
+  const LinkAndPromotedRestaurantCard = withLinkAndPromoted(RestaurantCard);
+
   return (
     <div
       className="w-screen bg-opacity-0 flex-1 overflow-scroll"
@@ -91,6 +99,7 @@ const Body = () => {
       <div className="w-7/10 mx-auto">
         <div className="flex flex-row justify-between mx-8 mt-12">
           <LeftHeader>
+            <span className="text-2xl text-slate-600">{`Hey ${userName}! `}</span>
             Restaurants with online food delivery near you
           </LeftHeader>
           <div className="flex flex-row justify-end">
@@ -101,6 +110,14 @@ const Body = () => {
             >
               {isHighRated ? "all" : "top rated"}
             </button>
+            <label className="h-8 ml-2 self-center">User: </label>
+            <input
+              className="border-slate-300 border-[1px] rounded-md w-40 h-8 ml-2 pl-2"
+              value={userName}
+              onChange={(e) => {
+                setUserName(e.target.value);
+              }}
+            />
           </div>
         </div>
         <div
@@ -108,13 +125,10 @@ const Body = () => {
           className="flex flex-row flex-wrap justify-between w-full mt-4"
         >
           {_.map(restaurant_grid_listing, (restaurantInfo) => (
-            <Link
-              to={`/restaurants/${restaurantInfo?.info?.id}`}
+            <LinkAndPromotedRestaurantCard
+              restaurantInfo={restaurantInfo}
               key={restaurantInfo?.info?.id}
-              className="basis-72 h-100 rounded-t-xl m-4 hover:cursor-pointer"
-            >
-              <RestaurantCard restaurantInfo={restaurantInfo} />
-            </Link>
+            />
           ))}
         </div>
       </div>

@@ -134,3 +134,5 @@ using react through script tag and having network call for react package is not 
 
 9. Why cant we have useEffect callback funcrtion as async?
 10. Can we have componentDidMount as async?
+
+11. What is dynamic import?

@@ -15,16 +15,7 @@ const RestaurantBasicSection = (props) => {
     sla,
     costForTwoMessage,
   } = basicDetails || {};
-  console.log(
-    "111",
-    name,
-    cuisines,
-    avgRatingString,
-    totalRatingsString,
-    areaName,
-    sla,
-    costForTwoMessage
-  );
+
   return (
     <div className="w-full border-b-[1px]">
       <div className="w-full flex flex-row justify-between p-3 border-b-[2px] border-dashed">

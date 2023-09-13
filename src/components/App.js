@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 
@@ -8,17 +8,30 @@ import Header from "./Header";
 import Body from "./Body";
 import AboutUs from "./AboutUs";
 import ErrorPage from "./ErrorPage";
-import ContactPage from "./ContactPage";
 import RestaurantDetail from "./RestaurantDetail";
+import UserContext from "../contexts/UserContext";
+import { Provider } from "react-redux";
+import appStore from "../utils/AppStore";
 
 const Grocery = React.lazy(() => import("./Grocery"));
 
 const App = () => {
+  const [userName, setUserName] = useState("");
+
+  useEffect(() => {
+    // authentication api call for validation
+    const data = { userName: "Malay Sarkar" };
+    setUserName(data.userName);
+  }, []);
   return (
-    <div className="flex flex-col h-screen w-screen items-center">
-      <Header />
-      <Outlet />
-    </div>
+    <Provider store={appStore}>
+      <UserContext.Provider value={{ userName, setUserName }}>
+        <div className="flex flex-col h-screen w-screen items-center">
+          <Header />
+          <Outlet />
+        </div>
+      </UserContext.Provider>
+    </Provider>
   );
 };
 
@@ -46,10 +59,6 @@ const appRouter = createBrowserRouter([
       {
         path: "about",
         element: <AboutUs />,
-      },
-      {
-        path: "contact",
-        element: <ContactPage />,
       },
     ],
     errorElement: <ErrorPage />,
